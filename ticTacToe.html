@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <title>Tic Tac Toe!</title>
+        <link rel="stylesheet" href="tictactoe.css">
+</head>
+<body>
+        <div id = "container">
+                <div class="square" id="num1" data-val ="1"></div>
+                <div class="square" id="num2" data-val ="2"></div>
+                <div class="square" id="num3" data-val ="3"></div>
+                <div class="square" id="num4" data-val ="4"></div>
+                <div class="square" id="num5" data-val ="5"></div>
+                <div class="square" id="num6" data-val ="6"></div>
+                <div class="square" id="num7" data-val ="7"></div>
+                <div class="square" id="num8" data-val ="8"></div>
+                <div class="square" id="num9" data-val ="9"></div>
+        </div>
+        
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script>
+    var round = "X";
+    var player1=[];
+    var player2=[];
+    var win1 = [1,5,9];
+    var win2 = [1,4,7];
+    var win3 = [1,2,3];
+    var win4 = [4,5,6];
+    var win5 = [7,8,9];
+    var win6 = [2,5,8];
+    var win7 = [3,6,9];
+    var win8 = [3,5,7];
+    var wins = [win1, win2, win3, win4, win5, win6, win7, win8];
+
+    var startNewGame = function(){
+            player1 = [];
+            player2 = [];
+            $(".square").each(function(){
+                $(this).text("");
+            });
+            wins = [win1, win2, win3, win4, win5, win6, win7, win8];
+            round = "X";
+        }
+
+    $(".square").click(function(){
+        var text = $(this).text();  
+        if(text === ""){
+            if(round === "X"){
+                $(this).text("X");
+                player1.push($(this).data("val"));
+                round = "O";
+            } else {
+                $(this).text("O");
+                player2.push($(this).data("val"));
+                round = "X";
+            }
+//hazy on following logic and syntax
+            $.each(wins, function(index, v){
+                if(player1.length>=3){
+                    var flag = true;
+
+                    $.each(v,function(key, value){
+                        if($.inArray(value, player1) === -1){
+                            flag = false;
+                        }
+                    })
+                    if(flag === true){
+                        alert("player1 wins!");
+                        startNewGame();
+                        
+                    }
+                }
+
+                if(player2.length>=3){
+                    var flag = 1;
+
+                    $.each(v, function(key, value){
+                        if($.inArray(value, player2) === -1){
+                            flag = 2;
+                        }
+                    })
+
+                    if(flag === 1){
+                        alert("player2 wins!");
+                        startNewGame();
+                        
+                    }
+                }
+            });
+
+            if(player1.length === 5){
+                alert("Tie!")
+                startNewGame();
+                
+            }
+        };
+    });
+
+
+    // Declare a function with all these variables. Declare all the variables before you do anything with them.
+
+   // $(function () {
+
+   //  var squares = [], 
+   //      SIZE = 3,
+   //      EMPTY = "&nbsp;",
+   //      score,
+   //      moves,
+   //      turn = "X",
+
+   //      // wins are based on giving a number for each cell then adding them up to show if someone has them in a row
+   //      wins = [7, 56, 448, 73, 146, 292, 273, 84],
+
+   //      // This starts a new game. Sets the turn to X, puts the score back at 0. Makes the moves 0. Empties the text in the squares.
+   //      startNewGame = function () {
+   //      turn = "X";
+   //      score = {"X": 0, "O": 0};
+   //      moves = 0;
+   //      squares.forEach(function (square) {square.html(EMPTY);});
+   //  },
+
+   //          // loops through all possible win values and compares them to the score. returns true if there is a match.
+   //       win = function (score) {
+   //          for (var i = 0; i < wins.length; i += 1) {
+   //              if ((wins[i] & score) === wins[i]) {
+   //                  return true;
+   //              }
+   //          }
+   //          return false;
+   //  },
+
+
+   //      set = function () {
+            
+   //          // if the box isn't empty then return. otherwise you would be able to play the whole game in one cell until 9 moves are made and it's a tie
+   //          if ($(this).html() !== EMPTY) {
+   //              return;
+   //          }
+
+   //          // clicking inserts html of turn which starts at x but changes to o every other turn. will log turn. add one to moves (so there can only be 9)
+   //          $(this).html(turn);
+   //          console.log($(this));
+   //          moves += 1;
+   //          score[turn] += $(this)[0].indicator;
+   //          console.log(score[turn]);
+   //          if (win(score[turn])) {
+   //              alert(turn + " wins!");
+   //              startNewGame();
+   //          } else if (moves === SIZE * SIZE) {
+   //              alert("Tie game!");
+   //              startNewGame();
+   //          } else {
+   //              // switches the turns - if turn is X, make it O, else make it X
+   //              turn = turn === "X" ? "O" : "X";
+   //          }
+   //      },
+   //      play = function () {
+   //          var board = $("<table border=1 cellspacing=0>"), indicator = 1;
+   //          for (var i = 0; i < SIZE; i += 1) {
+   //              var row = $("<tr>");
+   //              board.append(row);
+   //              for (var j = 0; j < SIZE; j += 1) {
+   //                  var cell = $("<td height=50 width=50 align=center valign=center></td>");
+   //                  cell[0].indicator = indicator;
+   //                  cell.click(set);
+   //                  row.append(cell);
+   //                  squares.push(cell);
+   //                  indicator += indicator;
+   //              }
+   //          }
+   //          $(document.getElementById("tictactoe") || document.body).append(board);
+   //          startNewGame();
+   //      };
+
+   //      play();
+   //  });
+
+
+
+
+
+
+
+    </script>
+    
+</body>
+</html>
