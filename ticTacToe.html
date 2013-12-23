@@ -22,82 +22,230 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
     <script>
-    var round = "X";
-    var player1=[];
-    var player2=[];
-    var win1 = [1,5,9];
-    var win2 = [1,4,7];
-    var win3 = [1,2,3];
-    var win4 = [4,5,6];
-    var win5 = [7,8,9];
-    var win6 = [2,5,8];
-    var win7 = [3,6,9];
-    var win8 = [3,5,7];
-    var wins = [win1, win2, win3, win4, win5, win6, win7, win8];
+    var whichClick = "X";
+    var gameWinner = "";
+    $( ".square" ).click(function() {
+        if($(this).html() == ""){
+            $(this).html(whichClick);
+            if(whichClick === "X"){
+               whichClick = "O"; 
+            } else {
+                whichClick = "X";
+            }
+            checkTopRow();
+            checkMiddleRow();
+            checkBottomRow();
+            checkFirstColumn();
+            checkMiddleColumn();
+            checkLastColumn();
+            checkDiagonalRight();
+            checkDiagonalLeft();
+            checkTie();
+        }
+    });
 
-    var startNewGame = function(){
-            player1 = [];
-            player2 = [];
-            $(".square").each(function(){
-                $(this).text("");
-            });
-            wins = [win1, win2, win3, win4, win5, win6, win7, win8];
-            round = "X";
+    function checkTopRow() {
+        if($("#num1").html() != ""){
+                if($("#num1").html() == $("#num2").html() && $("#num3").html() == $("#num1").html()){
+                    gameWinner = $("#num1").html();
+                    alert("Player "+ gameWinner +" wins!");
+                    resetGame();
+                }
         }
 
-    $(".square").click(function(){
-        var text = $(this).text();  
-        if(text === ""){
-            if(round === "X"){
-                $(this).text("X");
-                player1.push($(this).data("val"));
-                round = "O";
-            } else {
-                $(this).text("O");
-                player2.push($(this).data("val"));
-                round = "X";
-            }
-//hazy on following logic and syntax
-            $.each(wins, function(index, v){
-                if(player1.length>=3){
-                    var flag = true;
+    }
 
-                    $.each(v,function(key, value){
-                        if($.inArray(value, player1) === -1){
-                            flag = false;
-                        }
-                    })
-                    if(flag === true){
-                        alert("player1 wins!");
-                        startNewGame();
-                        
-                    }
+    function checkMiddleRow() {
+        if($("#num4").html() != ""){
+                if($("#num4").html() == $("#num5").html() && $("#num6").html() == $("#num4").html()){
+                    gameWinner = $("#num4").html();
+                    alert("Player "+ gameWinner +" wins!");
+                    resetGame();
                 }
+        }
 
-                if(player2.length>=3){
-                    var flag = 1;
+    }
 
-                    $.each(v, function(key, value){
-                        if($.inArray(value, player2) === -1){
-                            flag = 2;
-                        }
-                    })
-
-                    if(flag === 1){
-                        alert("player2 wins!");
-                        startNewGame();
-                        
-                    }
+    function checkBottomRow() {
+        if($("#num7").html() != ""){
+                if($("#num7").html() == $("#num8").html() && $("#num9").html() == $("#num7").html()){
+                    gameWinner = $("#num7").html();
+                    alert("Player "+ gameWinner +" wins!");
+                    resetGame();
                 }
-            });
+        }
 
-            if(player1.length === 5){
-                alert("Tie!")
-                startNewGame();
+    }
+
+    function checkFirstColumn() {
+        if($("#num1").html() != ""){
+                if($("#num1").html() == $("#num4").html() && $("#num7").html() == $("#num1").html()){
+                    gameWinner = $("#num1").html();
+                    alert("Player "+ gameWinner +" wins!");
+                    resetGame();
+                }
+        }
+
+    }
+
+    function checkMiddleColumn() {
+        if($("#num2").html() != ""){
+                if($("#num2").html() == $("#num5").html() && $("#num8").html() == $("#num2").html()){
+                    gameWinner = $("#num2").html();
+                    alert("Player "+ gameWinner +" wins!");
+                    resetGame();
+                }
+        }
+
+    }
+
+    function checkLastColumn() {
+        if($("#num3").html() != ""){
+                if($("#num3").html() == $("#num6").html() && $("#num9").html() == $("#num3").html()){
+                    gameWinner = $("#num3").html();
+                    alert("Player "+ gameWinner +" wins!");
+                    resetGame();
+                }
+        }
+
+    }
+
+    function checkDiagonalRight() {
+        if($("#num1").html() != ""){
+                if($("#num1").html() == $("#num5").html() && $("#num9").html() == $("#num1").html()){
+                    gameWinner = $("#num1").html();
+                    alert("Player "+ gameWinner +" wins!");
+                    resetGame();
+                }
+        }
+
+    }
+
+    function checkDiagonalLeft() {
+        if($("#num3").html() != ""){
+                if($("#num3").html() == $("#num5").html() && $("#num7").html() == $("#num3").html()){
+                    gameWinner = $("#num3").html();
+                    alert("Player "+ gameWinner +" wins!");
+                    resetGame();
+                }
+        }
+
+    }
+
+    function resetGame() {
+        $(".square").each( function(){
+            $(this).html("");
+        })
+    }
+
+    function checkTie() {
+        var anyBlank = false;
+        $(".square").each(function(){
+           if($(this).html() == ""){
+            anyBlank = true;      
+           }
+        });
+        if(anyBlank == false){
+            alert("it's a tie!");
+            resetGame();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//     var round = "X";
+//     var X=[];
+//     var O=[];
+//     var win1 = [1,5,9];
+//     var win2 = [1,4,7];
+//     var win3 = [1,2,3];
+//     var win4 = [4,5,6];
+//     var win5 = [7,8,9];
+//     var win6 = [2,5,8];
+//     var win7 = [3,6,9];
+//     var win8 = [3,5,7];
+//     var wins = [win1, win2, win3, win4, win5, win6, win7, win8];
+
+//     var startNewGame = function(){
+//             X = [];
+//             O = [];
+//             $(".square").each(function(){
+//                 $(this).text("");
+//             });
+//             wins = [win1, win2, win3, win4, win5, win6, win7, win8];
+//             round = "X";
+//         }
+
+//     $(".square").click(function(){
+//         var text = $(this).text();  
+//         if(text === ""){
+//             if(round === "X"){
+//                 $(this).text("X");
+//                 X.push($(this).data("val"));
+//                 round = "O";
+//             } else {
+//                 $(this).text("O");
+//                 O.push($(this).data("val"));
+//                 round = "X";
+//             }
+// //hazy on following logic and syntax
+//             $.each(wins, function(index, v){
+//                 if(X.length>=3){
+//                     var result = true;
+
+//                     $.each(v,function(key, value){
+//                         if($.inArray(value, X) === -1){
+//                             result = false;
+//                         }
+//                     })
+//                     if(result === true){
+//                         alert("X Wins!");
+//                         startNewGame();
+                        
+//                     }
+//                 }
+
+//                 if(O.length>=3){
+//                     var result = true;
+
+//                     $.each(v, function(key, value){
+//                         if($.inArray(value, O) === -1){
+//                             result = false;
+//                         }
+//                     })
+
+//                     if(result === true){
+//                         alert("O Wins!");
+//                         startNewGame();
+                        
+//                     }
+//                 }
+//             });
+
+//             if(X.length === 5){
+//                 alert("Tie!")
+//                 startNewGame();
                 
-            }
-        };
-    });
+//             }
+//         };
+//     });
+
+
+//trouble points - making the clicks relate to values in an array. this last part with the $.inArray and the $.each
+//also how to add jquery to my rails app?
 
 
     // Declare a function with all these variables. Declare all the variables before you do anything with them.

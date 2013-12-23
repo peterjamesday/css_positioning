@@ -1,0 +1,80 @@
+.container, body, html {
+  height: 100%;
+  width: 95%;
+  position: fixed;
+}
+
+div {
+	height: 30%;
+	width: 95%;
+	margin: 0 auto;
+}
+
+#head{
+	background: white;
+	border: 1px solid white;
+	height: 70px;
+	width: 70px;
+	-moz-border-radius: 35px;
+	border-radius: 35px;
+	position: relative;
+	margin-left: 300px;
+}
+
+#leftArm{
+	background: white;
+	border: 1px solid white;
+	height: 70px;
+	width: 70px;
+	-moz-border-radius: 35px;
+	border-radius: 35px;
+	position: relative;
+	margin-left: 300px;
+}
+
+#body{
+	background: white;
+	border: 1px solid white;
+	height: 70px;
+	width: 70px;
+	-moz-border-radius: 35px;
+	border-radius: 35px;
+	position: relative;
+	margin-left: 300px;
+
+
+}
+
+#rightArm{
+	background: white;
+	border: 1px solid white;
+	height: 70px;
+	width: 70px;
+	-moz-border-radius: 35px;
+	border-radius: 35px;
+	position: relative;
+	margin-left: 300px;
+}
+
+
+#rightLeg{
+	background: white;
+	border: 1px solid white;
+	height: 70px;
+	width: 70px;
+	-moz-border-radius: 35px;
+	border-radius: 35px;
+	position: relative;
+	margin-left: 300px;
+}
+
+#leftLeg{
+	background: white;
+	border: 1px solid white;
+	height: 70px;
+	width: 70px;
+	-moz-border-radius: 35px;
+	border-radius: 35px;
+	position: relative;
+	margin-left: 300px;
+}

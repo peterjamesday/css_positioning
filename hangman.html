@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <title>Hangman!</title>
+        <link rel="stylesheet" href="hangman.css">
+</head>
+<body>
+
+	<div class="container">
+		<button onclick="startGame()">Start</button>
+		<div class="circle" id="head"></div>
+		<div class="circle" id="leftArm"></div>
+		<div class="circle" id="body"></div>
+		<div class="circle" id="rightArm"></div>
+		<div class="circle" id="rightLeg"></div>
+		<div class="circle" id="leftLeg"></div>
+	</div>
+
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+
+var counter = 0;
+var word = "hangman"
+var re = /[a-zA-Z]/g;
+
+var guess = "";
+
+
+
+function newRound(){
+	var guess = prompt("Guess a letter!")
+	for(var i = 0; i <= word.length; i++){
+		if( word[i] == guess){
+			
+        
+		} else if(counter == 6){
+
+			$('#rightLeg').css('border-color', 'black');
+			alert("Game Over!");
+			$('.circle').css('border-color', 'white');
+			counter = 0;
+			return;		
+		} else {
+			counter += 1;
+			loseRound();
+			newRound();
+		}
+	}
+}
+
+
+
+
+function gameOver(){
+	if(counter == 6){
+		alert("Game Over!");
+		$('.circle').css('border-color', 'white');
+		counter = 0;
+		return;
+	}
+}
+
+function startGame(){
+	var word = prompt("What word would you like to use?");
+	newRound();
+}
+
+function loseRound(){
+	if(counter == 1){
+		$('#head').css('border-color', 'black');
+	}
+	if(counter == 2){
+		$('#body').css('border-color', 'black');
+	}
+	if(counter == 3){
+		$('#leftArm').css('border-color', 'black');
+	}
+	if(counter == 4){
+		$('#rightArm').css('border-color', 'black');
+	}
+	if(counter == 5){
+		$('#leftLeg').css('border-color', 'black');
+	}
+	
+}
+
+
+
+
+
+</script>
+</body>
+</html>

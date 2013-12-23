@@ -1,0 +1,18 @@
+Hangman
+
+6 guesses, each associated with a picture. if guess is wrong, make a picture appear.
+if 6 pictures appear, game over. 
+
+prompt- guess a letter
+
+also, prompt in the beginning to input string to check.
+string to check will then break the letters into little spaces to display the letters
+
+if a letter is guessed correctly, add the letter onto the space. 
+can do this with .html(letter). each of these spaces can be a div with a border on the bottom... 
+
+take a string, put it in an array and iterate over the length with arr(i) to check for letters. if they find the letter, show the letter in the apropriate place and prompt again for another guess.
+
+if there is no letter, show the picture, counter += 1
+
+if counter = 6, game over
