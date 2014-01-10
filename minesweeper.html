@@ -37,7 +37,8 @@ var arrayTile,
 	row, 
 	column, 
 	mineCounter,
-	flagCounter = 10, 
+	numberOfMines = 10, 
+	flagCounter = numberOfMines,
 	flagPower = false;
 
 
@@ -146,14 +147,10 @@ randomMines();
 
 
 
-
-$('.cell').click(function(){
-
-	row = this.cellIndex; //for x-coordinate
-	column = this.parentNode.rowIndex; //for y-coordinate
+function clickCell(row, column, el){
 
 	if(flagPower == true){
-		$(this).css('background-color', 'blue');
+		el.css('background-color', 'blue');
 		placeFlag();
 	} else {
 		if (arrayTile[row][column].hasMine == true){
@@ -162,14 +159,55 @@ $('.cell').click(function(){
 			gameOver();
 		} else {
 			arrayTile[row][column].beenClicked = true;
-			countMines(row, column);
-			$(this).html(mineCounter); //pushes value of countMines into cell
-				
-			checkNeighbor(row, column);	
+			// countMines(row, column);
+			// $(this).html(mineCounter); //pushes value of countMines into cell
+			mineController(row, column);
+			// checkNeighbor(row, column);	
 				
 		}
 	}
+}
+
+
+$('.cell').click(function(){
+
+	row = this.cellIndex; //for x-coordinate
+	column = this.parentNode.rowIndex; //for y-coordinate
+
+	clickCell(row, column, $(this));
+
+	// if(flagPower == true){
+	// 	$(this).css('background-color', 'blue');
+	// 	placeFlag();
+	// } else {
+	// 	if (arrayTile[row][column].hasMine == true){
+
+	// 		revealMines();	
+	// 		gameOver();
+	// 	} else {
+	// 		arrayTile[row][column].beenClicked = true;
+	// 		// countMines(row, column);
+	// 		// $(this).html(mineCounter); //pushes value of countMines into cell
+	// 		mineController(row, column);
+	// 		// checkNeighbor(row, column);	
+				
+	// 	}
+	// }
 });
+
+
+
+function mineController(x, y){
+
+	if (countMines(x, y) == 0){
+		$("#board tr:nth-child(" + (y + 1) + ") td:nth-child(" + (x + 1) + ")").html(countMines(x,y)).css("background-color", "grey");
+		checkNeighbor(x, y);
+		
+	} else {
+		$("#board tr:nth-child(" + (y + 1) + ") td:nth-child(" + (x + 1) + ")").html(countMines(x,y)).css("background-color", "#ACACBD");
+	}
+}
+
 
 
 function countMines(x, y){ //counts mines immediately surrounding cell
@@ -180,26 +218,33 @@ function countMines(x, y){ //counts mines immediately surrounding cell
 			if(i >= 0 && i < 8 && j >= 0 && j < 8){
 				if(arrayTile[i][j].hasMine == true){
 					numOfMines++;	
+				// } else {
+				// 	checkNeighbor(i+1, j+1);
+
 				}
 
 			}
 			
 		}
 	}
-	mineCounter = numOfMines;
-
+	return numOfMines;
 }
 
 function checkNeighbor(x, y){ //if you get an empty cell, it checks the cells immediately around it for their numbers
-	if(mineCounter == 0){
+	
+	
 		for(var i = (x - 1); i <= (x + 1); i++){
 			for(var j = (y - 1 ); j <= (y + 1); j++){
-				
-				countMines(i, j);
-				$("#board tr:nth-child(" + (j + 1) + ") td:nth-child(" + (i + 1) + ")").html(mineCounter);	
+				if(i >= 0 && i < 8 && j >= 0 && j < 8){
+					if(arrayTile[i][j].beenClicked == false){
+						clickCell(i, j);
+						mineCounter = countMines(i, j);
+						$("#board tr:nth-child(" + (j + 1) + ") td:nth-child(" + (i + 1) + ")").html(mineCounter);
+					}
+				}	
 			}				
 		}
-	}
+	
 
 }
 
@@ -232,7 +277,7 @@ function winGame(){ //checks to see if game is won, called when all flags are pl
 			}
 		}
 	}
-	if(winCount == 10){ //if the flags have been placed correctly, you win! if not, you lose.
+	if(winCount == numberOfMines){ //if the flags have been placed correctly, you win! if not, you lose.
 		$('.cell').css('background-color', 'green');
 	} else {
 		revealMines();
