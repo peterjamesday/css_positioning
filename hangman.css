@@ -1,7 +1,8 @@
 .container, body, html {
-  height: 100%;
-  width: 95%;
+  height: 494px;
+  width: 822px;
   position: fixed;
+
 }
 
 div {
@@ -12,69 +13,109 @@ div {
 
 #head{
 	background: white;
-	border: 1px solid white;
+	border: 3px solid white;
 	height: 70px;
 	width: 70px;
 	-moz-border-radius: 35px;
 	border-radius: 35px;
-	position: relative;
-	margin-left: 300px;
+	position: absolute;
+	left: 300px;
+	top: 90px;
 }
 
 #leftArm{
 	background: white;
-	border: 1px solid white;
-	height: 70px;
-	width: 70px;
-	-moz-border-radius: 35px;
-	border-radius: 35px;
-	position: relative;
-	margin-left: 300px;
+	width: 3px;
+	transform: rotate(49deg);
+	-ms-transform: rotate(49deg); /* IE 9 */
+	-webkit-transform: rotate(49deg);
+	left: 289px;
+	top: 166px;
+	position: absolute;
+	height: 25%;
 }
 
 #body{
 	background: white;
-	border: 1px solid white;
-	height: 70px;
-	width: 70px;
-	-moz-border-radius: 35px;
-	border-radius: 35px;
-	position: relative;
-	margin-left: 300px;
+	width: 5px;
+	left: 336px;
+	top: 165px;
+	position: absolute;
 
 
 }
 
 #rightArm{
 	background: white;
-	border: 1px solid white;
-	height: 70px;
-	width: 70px;
-	-moz-border-radius: 35px;
-	border-radius: 35px;
-	position: relative;
-	margin-left: 300px;
+	width: 3px;
+	transform: rotate(135deg);
+	-ms-transform: rotate(135deg); /* IE 9 */
+	-webkit-transform: rotate(135deg);
+	left: 382px;
+	top: 169px;
+	position: absolute;
+	height: 25%;
 }
 
 
 #rightLeg{
 	background: white;
-	border: 1px solid white;
-	height: 70px;
-	width: 70px;
-	-moz-border-radius: 35px;
-	border-radius: 35px;
-	position: relative;
-	margin-left: 300px;
+	width: 5px;
+	width: 3px;
+	transform: rotate(151deg);
+	-ms-transform: rotate(151deg); /* IE 9 */
+	-webkit-transform: rotate(151deg);
+	left: 373px;
+	top: 300px;
+	position: absolute;
 }
 
 #leftLeg{
 	background: white;
-	border: 1px solid white;
-	height: 70px;
-	width: 70px;
-	-moz-border-radius: 35px;
-	border-radius: 35px;
-	position: relative;
-	margin-left: 300px;
+	width: 5px;
+	width: 3px;
+	transform: rotate(30deg);
+	-ms-transform: rotate(30deg); /* IE 9 */
+	-webkit-transform: rotate(30deg);
+	left: 301px;
+	top: 299px;
+	position: absolute;
+}
+
+#guessLetter{
+
+}
+
+#blankContainer{
+	
+}
+
+.blank{
+	width:5%;
+	float: left;
+	margin: 0;
+}
+
+
+
+
+.wrong{
+	width:5%;
+	float: left;
+	margin: 0;
+}
+
+.button{
+	display: none;
+	margin: 0 auto;
+}
+
+.banner{
+	text-align: center;
+}
+
+#win{
+	text-align: center;
+	font-size: 150px;
+
 }

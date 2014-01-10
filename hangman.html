@@ -8,14 +8,35 @@
 <body>
 
 	<div class="container">
-		<button onclick="startGame()">Start</button>
-		<div class="circle" id="head"></div>
-		<div class="circle" id="leftArm"></div>
-		<div class="circle" id="body"></div>
-		<div class="circle" id="rightArm"></div>
-		<div class="circle" id="rightLeg"></div>
-		<div class="circle" id="leftLeg"></div>
+		<div class="banner"><div>What word would you like to use?</div>
+			<input type="text" id="wordToUse">
+			<button type="button" class="submit">Submit Word</button>
+		</div>
+		<div class="gameboard">
+			<div class="circle" id="head"></div>
+			<div class="circle" id="leftArm"></div>
+			<div class="circle" id="body"></div>
+			<div class="circle" id="rightArm"></div>
+			<div class="circle" id="rightLeg"></div>
+			<div class="circle" id="leftLeg"></div>
+
+			<!-- <input type="text" id="guessLetter"> -->
+			<div id="blankContainer"></div>
+			
+			Wrong Guesses:
+			
+			<div id="wrongContainer"><div class="wrong"></div></div>
+			
+		</div>
+		
+		<div id="win">You Win!</div>
+		<div style="text-align: center">
+		<br>
+		<br>
+		<button type="button" class="button">Play Again?</button>
+		</div>
 	</div>
+	
 
 
 
@@ -23,75 +44,261 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript">
 
+// problems with game: needs to be designed up correctly visually, needs that design to be responsive, needs design to be swanky
 
-
-var counter = 0;
-var word = "hangman"
-var re = /[a-zA-Z]/g;
-
-var guess = "";
+// needs input in the beginning asking for the answer. needs some sort of display when you answer the correct letter. needs to sort for letters. needs to be able to see if the letter is correct when you guess one. needs to know when you guess all the correct letters, so you can win the game. 
 
 
 
-function newRound(){
-	var guess = prompt("Guess a letter!")
-	for(var i = 0; i <= word.length; i++){
-		if( word[i] == guess){
-			
-        
-		} else if(counter == 6){
+var counter = 0,
+    answer = "",
+    arrayAnswer = answer.split(""),
+    guess,
+    arrayWrong = [],
+    arrayRight = [],
+    winner;
 
-			$('#rightLeg').css('border-color', 'black');
-			alert("Game Over!");
-			$('.circle').css('border-color', 'white');
-			counter = 0;
-			return;		
-		} else {
-			counter += 1;
-			loseRound();
-			newRound();
+
+createGame();
+
+
+
+function enterGameInputs(){
+	$( document ).on("keyup", function(event){
+		
+		if (event.keyCode == 32 || event.keyCode >= 65 && event.keyCode <= 90){
+			hangMan(String.fromCharCode(event.which).toLowerCase());
 		}
-	}
+		
+	});
 }
 
 
+//only listen to key codes that are going to be letters (and pass to hangman)
+//only put on when you submit a letter (use off)
+// keycodes are 32, 65-90 and 97-122, of [a-zA-Z]+\s?[a-zA-Z]*
+
+// event.keyCode == 32 || event.keyCode >= 65 && event.keyCode <= 90
 
 
-function gameOver(){
-	if(counter == 6){
-		alert("Game Over!");
-		$('.circle').css('border-color', 'white');
-		counter = 0;
-		return;
-	}
+
+
+
+// $( "#guessLetter" ).keyup(function() {
+// 	 hangMan($(this).val());
+// 	 $(this).val("");
+// });
+
+// function passValue(event){
+// 	console.log(event);
+// 	hangMan(event);
+//     $(this).val("");
+// }
+
+function createGame(){
+	$("#win").hide();
+	$(".button").hide();
+	$(".gameboard").hide();
+	$(".banner").show();
+	$("#blankContainer").empty();	
+	
+	
+
 }
 
-function startGame(){
-	var word = prompt("What word would you like to use?");
-	newRound();
-}
+$(".submit").click(function(){
+	answer = $("#wordToUse").val();
+	arrayAnswer = answer.toLowerCase().split("");
+	
+		for(var j = 0; j < arrayAnswer.length; j++){
+		
+			$("#blankContainer").append("<div class='blank'>_</div>");
+		}
+	$(".banner").hide();
+	$(".gameboard").show();
+	enterGameInputs();
+    });
 
-function loseRound(){
-	if(counter == 1){
-		$('#head').css('border-color', 'black');
+
+
+
+function hangMan(guess) {
+	
+	var guessCheck = false;
+	
+	for(var i = 0; i < arrayAnswer.length; i++){
+		
+		if (guess == arrayAnswer[i]) {
+			// alert("correct!")
+			
+			
+			$($(".blank")[i]).html(guess);
+			guessCheck = true;
+
+		} 
 	}
-	if(counter == 2){
-		$('#body').css('border-color', 'black');
+
+	if(guessCheck == true){
+		console.log("correct!");
+		arrayRight.push(guess);
+		
+	} else {
+		counter += 1;
+		arrayWrong.push(guess)
+		console.log("incorrect!");
+		loseRound();
 	}
-	if(counter == 3){
-		$('#leftArm').css('border-color', 'black');
+	
+	$(".wrong").html(arrayWrong);
+	if (winGame()){
+		$(".gameboard").hide();
+		$(".banner").hide();
+		$("#win").show();
+		playAgain();
 	}
-	if(counter == 4){
-		$('#rightArm').css('border-color', 'black');
-	}
-	if(counter == 5){
-		$('#leftLeg').css('border-color', 'black');
-	}
+
 	
 }
 
 
 
+
+function loseRound(){
+
+	if(counter == 1){
+		$('#head').css('border-color', 'black');
+		
+		
+	}
+	if(counter == 2){
+		$('#body').css('background', 'black');
+		
+		
+	}
+	if(counter == 3){
+		$('#leftArm').css('background', 'black');
+		
+		
+	}
+	if(counter == 4){
+		$('#rightArm').css('background', 'black');
+		
+		
+	}
+	if(counter == 5){
+		$('#leftLeg').css('background', 'black');
+		
+		
+	}
+	if(counter == 6){
+		$('#rightLeg').css('background', 'black');
+		
+		alert("Game Over!");
+		
+		
+		playAgain();
+	}
+
+}
+
+
+function winGame(){
+	winner = true;
+ 	for(var i = 0; i < $(".blank").length; i++){
+ 		if ($($(".blank")[i]).html() == "_"){
+ 			winner = false;
+ 			break;
+ 		} else {
+ 			winner = true;
+ 		}
+ 	}
+ 	return winner;
+
+}
+
+
+function playAgain(){
+	$(".button").show();
+	
+}
+
+$(".button").click(function(){
+		$('.circle').css('background', 'white');
+		$('.circle').css('border-color', 'white');
+		arrayWrong = [];
+		$("#blankContainer").empty;
+		$(".wrong").html(arrayWrong);
+		counter = 0;
+		$("#win").hide();
+		createGame();
+	});
+
+
+
+// var counter = 0;
+
+// var re = /[a-zA-Z]/g;
+
+// startGame();
+
+// function startGame(){
+// 	var word = prompt("What word would you like to use?", "");
+// 	newRound();
+// 	startGame();
+// }
+
+// function newRound(){
+// 	var guess = prompt("Guess a letter!")
+// 	for(var i = 0; i <= word.length; i++){
+// 		if( word[i] == guess){
+// 			alert("Correct!")
+        
+// 		} else if(counter == 6){
+
+// 			$('#rightLeg').css('border-color', 'black');
+// 			alert("Game Over!")
+// 			$('.circle').css('border-color', 'white');
+// 			counter = 0;
+// 			break;		
+// 		} else {
+// 			counter += 1;
+			
+// 			if(counter < 6 || counter > 0){
+				
+				
+// 				loseRound();
+// 				newRound();
+// 			} else {
+// 				startGame();
+// 			}
+			
+// 		}
+// 	}
+// }
+
+
+
+
+// function gameOver(){
+// 	if(counter == 6){
+// 		alert("Game Over!");
+// 		$('.circle').css('border-color', 'white');
+// 		counter = 0;
+// 		return;
+// 	}
+// }
+
+// function playAgain(){
+// 	var playAgain = prompt("Do you want to play again?", "Yes");
+// 	if(playAgain == "Yes"){
+// 		hangMan();
+// }
+
+
+
+// create blank letter pool, Want to play an new game button that only shows up when the game ends. jquery has a .hide and .show
+
+//sunday 4-5.
 
 
 </script>

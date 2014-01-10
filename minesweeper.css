@@ -1,0 +1,65 @@
+
+
+
+.titleBanner{
+	text-align: center;
+	font-size: 35px;
+}
+
+
+table{
+	margin: 0 auto;
+}
+
+	
+.cell {
+	-moz-box-shadow:inset 0px 0px 18px -5px #121212;
+	-webkit-box-shadow:inset 0px 0px 18px -5px #121212;
+	box-shadow:inset 0px 0px 18px -5px #121212;
+/*	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f5f5f5), color-stop(1, #b3b3b3) );
+	background:-moz-linear-gradient( center top, #f5f5f5 5%, #b3b3b3 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#b3b3b3');*/
+	background-color:#f5f5f5;
+	border-style: solid;
+	border-color: black;
+	text-indent:0;
+	display:inline-block;
+	color:#666666;
+	font-family:Trebuchet MS;
+	font-size:15px;
+	font-weight:bold;
+	font-style:normal;
+	height:50px;
+	line-height:40px;
+	width:50px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #ffffff;
+	margin-right: 0.5px;
+	margin-left: 0.5px;
+}
+.cell:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #b3b3b3), color-stop(1, #f5f5f5) );
+	background:-moz-linear-gradient( center top, #b3b3b3 5%, #f5f5f5 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#b3b3b3', endColorstr='#f5f5f5');
+	background-color:#b3b3b3;
+}
+.cell:active {
+	position:relative;
+	top:0.5px;
+
+}
+
+#gameOver{
+	position: relative;
+	display: none;
+	z-index: 2;
+	font-size: 113px;
+	top: -397px;
+	margin-left: 9%;
+	padding-left: 16%;
+	background-color:rgba(255,255,255,0.9);
+	border-style: solid;
+	border-color: rgba(255,255,255,0.1);
+	border-width: 24px;
+}
