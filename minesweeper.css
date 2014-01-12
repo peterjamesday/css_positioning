@@ -50,7 +50,7 @@ table{
 
 }
 
-#gameOver{
+.flashBanner{
 	position: relative;
 	display: none;
 	z-index: 2;

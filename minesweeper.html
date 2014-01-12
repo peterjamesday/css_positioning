@@ -24,8 +24,12 @@
 	</table>
 
 
-	<div id="gameOver">
+	<div class="flashBanner" id="gameOver">
 		Game Over!
+	</div>
+
+	<div class="flashBanner" id="youWin">
+		You Win!
 	</div>
 
 </div> 
@@ -278,11 +282,24 @@ function winGame(){ //checks to see if game is won, called when all flags are pl
 		}
 	}
 	if(winCount == numberOfMines){ //if the flags have been placed correctly, you win! if not, you lose.
-		$('.cell').css('background-color', 'green');
+		// $('.cell').css('background-color', 'green');
+		// $("#gameOver").show();
+		// $("#gameOver").click(function(){
+		// location.reload();
+		winSequence();
+	
 	} else {
 		revealMines();
 		gameOver();
 	}				
+}
+
+function winSequence(){
+	$('.cell').css('background-color', 'green');
+		$("#youWin").show();
+		$("#youWin").click(function(){
+			location.reload();
+		});
 }
 
 // if(arrayTile[x][y].beenClicked == true){
