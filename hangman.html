@@ -74,6 +74,12 @@ function enterGameInputs(){
 }
 
 
+$(document).keypress(function(e){
+	if (e.which == 13){
+		$(".submit").click();
+	}
+});
+
 //only listen to key codes that are going to be letters (and pass to hangman)
 //only put on when you submit a letter (use off)
 // keycodes are 32, 65-90 and 97-122, of [a-zA-Z]+\s?[a-zA-Z]*
@@ -223,14 +229,16 @@ function playAgain(){
 }
 
 $(".button").click(function(){
-		$('.circle').css('background', 'white');
-		$('.circle').css('border-color', 'white');
-		arrayWrong = [];
-		$("#blankContainer").empty;
-		$(".wrong").html(arrayWrong);
-		counter = 0;
-		$("#win").hide();
-		createGame();
+
+	location.reload();
+		// $('.circle').css('background', 'white');
+		// $('.circle').css('border-color', 'white');
+		// arrayWrong = [];
+		// $("#blankContainer").empty;
+		// $(".wrong").html(arrayWrong);
+		// counter = 0;
+		// $("#win").hide();
+		// createGame();
 	});
 
 

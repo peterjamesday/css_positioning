@@ -40,12 +40,12 @@
 var arrayTile, 
 	row, 
 	column, 
-	mineCounter,
-	numberOfMines = 10, 
+	numberOfTiles = 4, 
+	numberOfMines = Math.ceil((numberOfTiles * numberOfTiles) * .15),
 	flagCounter = numberOfMines,
 	flagPower = false;
 
-
+// Begin Button Logic
 //logic for cheat button
 $('.cheat').mousedown(function(){
 	revealMines();
@@ -59,7 +59,7 @@ $('.cheat').mouseup(function(){
 $('.flag').click(function(){
 	if(flagPower == false){
 	flagPower = true;
-	$('.flag').css('background-color', 'blue')
+	$('.flag').css('background-color', '#88F0F2')
 	} else {
 		flagPower = false;
 		$('.flag').css('background-color', 'buttonface')
@@ -70,7 +70,7 @@ $(window).keydown(function(e){
 	if(e.ctrlKey || e.metaKey){
 		if(flagPower == false){
 			flagPower = true;
-			$('.flag').css('background-color', 'blue')
+			$('.flag').css('background-color', '#88F0F2')
 		} else {
 			flagPower = false;
 		$('.flag').css('background-color', 'buttonface')
@@ -84,27 +84,15 @@ $('.resetGame').click(function(){
 	location.reload();
 });
 
-
-
-// function flagButton(){
-// if(flagPower = false){
-// 		flagPower = true;
-// 		$('.flag').css('background-color', 'blue')
-// 	} else {
-// 		flagPower = false;
-// 	}
-// }
-//logic for turning off flag button
-
-
+//End Button Logic
 
 //creates the visual board and the array
 function generateBoard(){
 	var board = [];
-	for(var i = 0; i <= 7; i++){
+	for(var i = 0; i <= numberOfTiles; i++){
 		$("#board").append("<tr class='row'></tr>");
 		board[i] = [];
-		for(var j = 0; j <= 7; j++){
+		for(var j = 0; j <= numberOfTiles; j++){
 			$(".row:last").append("<td class='cell'></td>");
 			board[i].push(new tile());
 		}
@@ -121,14 +109,14 @@ function tile(){
 }
 
 
-
+//generate mines randomly across board
 function randomMines(){
 	var x, y;
 	var mineCount = 0;
 
-	while(mineCount < 10){
-		x = Math.floor(Math.random() * 7 + 1);
-		y = Math.floor(Math.random() * 7 + 1);
+	while(mineCount < numberOfMines){
+		x = Math.floor(Math.random() * numberOfTiles + 1);
+		y = Math.floor(Math.random() * numberOfTiles + 1);
 	
 		if(arrayTile[x][y].hasMine == false){
 			console.log(x+" "+y)
@@ -143,18 +131,11 @@ generateBoard();
 randomMines();
 
 
-//change the box to red when clicked, change beenClicked in array after    //challenge: connect array with board, check off beenClicked when front end is clicked, make it red when it's clicked, display the mines
-
-// when clicked, display mines around it, loop that checks surrounding 8 only if in the boundaries .html(numberofmines)
-
-//counter for each of these. the counter will be in an if statement that makes sure the output is between 0 and 7
-
-
 
 function clickCell(row, column, el){
 
 	if(flagPower == true){
-		el.css('background-color', 'blue');
+		el.css('background-color', '#88F0F2');
 		placeFlag();
 	} else {
 		if (arrayTile[row][column].hasMine == true){
@@ -163,11 +144,7 @@ function clickCell(row, column, el){
 			gameOver();
 		} else {
 			arrayTile[row][column].beenClicked = true;
-			// countMines(row, column);
-			// $(this).html(mineCounter); //pushes value of countMines into cell
-			mineController(row, column);
-			// checkNeighbor(row, column);	
-				
+			mineController(row, column);	
 		}
 	}
 }
@@ -179,24 +156,6 @@ $('.cell').click(function(){
 	column = this.parentNode.rowIndex; //for y-coordinate
 
 	clickCell(row, column, $(this));
-
-	// if(flagPower == true){
-	// 	$(this).css('background-color', 'blue');
-	// 	placeFlag();
-	// } else {
-	// 	if (arrayTile[row][column].hasMine == true){
-
-	// 		revealMines();	
-	// 		gameOver();
-	// 	} else {
-	// 		arrayTile[row][column].beenClicked = true;
-	// 		// countMines(row, column);
-	// 		// $(this).html(mineCounter); //pushes value of countMines into cell
-	// 		mineController(row, column);
-	// 		// checkNeighbor(row, column);	
-				
-	// 	}
-	// }
 });
 
 
@@ -204,11 +163,11 @@ $('.cell').click(function(){
 function mineController(x, y){
 
 	if (countMines(x, y) == 0){
-		$("#board tr:nth-child(" + (y + 1) + ") td:nth-child(" + (x + 1) + ")").html(countMines(x,y)).css("background-color", "grey");
+		$("#board tr:nth-child(" + (y + 1) + ") td:nth-child(" + (x + 1) + ")").html(countMines(x,y)).css("background-color", "#07C400");
 		checkNeighbor(x, y);
 		
 	} else {
-		$("#board tr:nth-child(" + (y + 1) + ") td:nth-child(" + (x + 1) + ")").html(countMines(x,y)).css("background-color", "#ACACBD");
+		$("#board tr:nth-child(" + (y + 1) + ") td:nth-child(" + (x + 1) + ")").html(countMines(x,y)).css("background-color", "#B1F0AF");
 	}
 }
 
@@ -219,11 +178,9 @@ function countMines(x, y){ //counts mines immediately surrounding cell
 	
 	for(var i = (x - 1); i <= (x + 1); i++){
 		for(var j = (y - 1 ); j <= (y + 1); j++){
-			if(i >= 0 && i < 8 && j >= 0 && j < 8){
+			if(i >= 0 && i <= numberOfTiles && j >= 0 && j <= numberOfTiles){
 				if(arrayTile[i][j].hasMine == true){
 					numOfMines++;	
-				// } else {
-				// 	checkNeighbor(i+1, j+1);
 
 				}
 
@@ -235,11 +192,11 @@ function countMines(x, y){ //counts mines immediately surrounding cell
 }
 
 function checkNeighbor(x, y){ //if you get an empty cell, it checks the cells immediately around it for their numbers
-	
+	var mineCounter;
 	
 		for(var i = (x - 1); i <= (x + 1); i++){
 			for(var j = (y - 1 ); j <= (y + 1); j++){
-				if(i >= 0 && i < 8 && j >= 0 && j < 8){
+				if(i >= 0 && i <= numberOfTiles && j >= 0 && j <= numberOfTiles){
 					if(arrayTile[i][j].beenClicked == false){
 						clickCell(i, j);
 						mineCounter = countMines(i, j);
@@ -273,8 +230,8 @@ function placeFlag(){
 
 function winGame(){ //checks to see if game is won, called when all flags are placed, it sees if all the hasMine's have also beenClicked
 	var winCount = 0;
-	for(var i = 0; i <= 7; i++){
-		for(var j = 0; j <= 7; j++){
+	for(var i = 0; i <= numberOfTiles; i++){
+		for(var j = 0; j <= numberOfTiles; j++){
 			if(arrayTile[i][j].hasMine == true && arrayTile[i][j].beenClicked == true){
 				
 				winCount++;
@@ -282,10 +239,6 @@ function winGame(){ //checks to see if game is won, called when all flags are pl
 		}
 	}
 	if(winCount == numberOfMines){ //if the flags have been placed correctly, you win! if not, you lose.
-		// $('.cell').css('background-color', 'green');
-		// $("#gameOver").show();
-		// $("#gameOver").click(function(){
-		// location.reload();
 		winSequence();
 	
 	} else {
@@ -295,24 +248,21 @@ function winGame(){ //checks to see if game is won, called when all flags are pl
 }
 
 function winSequence(){
-	$('.cell').css('background-color', 'green');
+	$('.cell').css('background-color', '#07C400');
+	revealMines();
+	hideMines();
 		$("#youWin").show();
 		$("#youWin").click(function(){
 			location.reload();
 		});
 }
 
-// if(arrayTile[x][y].beenClicked == true){
-// 	for(var i = 0; i <= 2; i++){
-// 		if(x < 0 &&  )
-// 	}
-// }
 
 function revealMines(){	//shows all the tiles that have mines
-	for(var i = 0; i <= 7; i++){
-		for(var j = 0; j <= 7; j++){
+	for(var i = 0; i <= numberOfTiles; i++){
+		for(var j = 0; j <= numberOfTiles; j++){
 			if(arrayTile[i][j].hasMine == true){
-				$("#board tr:nth-child(" + (j + 1) + ") td:nth-child(" + (i + 1) + ")").css('background-color', 'red');
+				$("#board tr:nth-child(" + (j + 1) + ") td:nth-child(" + (i + 1) + ")").css('background-color', '#F70400');
 
 			}
 		}
@@ -320,12 +270,12 @@ function revealMines(){	//shows all the tiles that have mines
 }
 
 function hideMines(){	//hides all the tiles that have mines
-	for(var i = 0; i <= 7; i++){
-		for(var j = 0; j <= 7; j++){
+	for(var i = 0; i <= numberOfTiles; i++){
+		for(var j = 0; j <= numberOfTiles; j++){
 			if(arrayTile[i][j].hasMine == true && arrayTile[i][j].beenClicked == false){
 				$("#board tr:nth-child(" + (j + 1) + ") td:nth-child(" + (i + 1) + ")").css('background-color', 'white');
 			} else if (arrayTile[i][j].hasMine == true && arrayTile[i][j].beenClicked == true){
-				$("#board tr:nth-child(" + (j + 1) + ") td:nth-child(" + (i + 1) + ")").css('background-color', 'blue');
+				$("#board tr:nth-child(" + (j + 1) + ") td:nth-child(" + (i + 1) + ")").css('background-color', '#88F0F2');
 			}
 		}
 	}
@@ -339,36 +289,6 @@ function gameOver(){
 		location.reload();
 	});
 }
-
-
-
-
-
-
-
-// click 
-// if hasMine is true{
-// 	display all mines
-// 	alert end game
-// 	surface reset button
-// }
-// else {
-// 	dispay number of mines adjacent
-// 	if no mines are adjacent display the number of mines in other adjacent blocks
-// }
-
-// cheat button
-// if clicked, show the tiles that have the mine without clicking them
-
-
-// if there are no mines
-// 	check if tiles around it have mines 
-// 	by asking if [x-2][y-1] && >-1 , etc hasMine == true
-// 	if yes, counter++
-// 		then on the tile .html(counter)
-// 	if there are no mines in the adjacent box, do check the mines that are adjacent to that block as well
-
-// if rightclick on the box, can put a flag
 
 
 </script>
